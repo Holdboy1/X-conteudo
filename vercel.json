@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/daily-post",
+      "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/cron/interactions",
+      "schedule": "0 */2 * * *"
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/client/$1" }
+  ]
+}
