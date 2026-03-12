@@ -35,5 +35,4 @@ export class TwitterService {
     return tweets;
   }
 
-  }
 }
