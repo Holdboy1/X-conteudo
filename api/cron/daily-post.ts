@@ -22,9 +22,14 @@ export default async function handler(req: any, res: any) {
       accessSecret: process.env.TWITTER_ACCESS_SECRET!,
     });
 
-    // 1. Gerar e postar no X (Twitter)
+    // 1. Buscar o que as pessoas estão falando sobre IA agora para dar contexto
+    const recentTweets = await twitter.getRecentTweets('AI news OR LLM OR OpenAI OR crypto AI', 3);
+    const context = recentTweets.join('\n---\n');
+
+    // 2. Gerar e postar no X (Twitter) baseado no contexto
     const tweet = await ai.generateContent({ 
       platform: 'twitter', 
+      context: context || undefined,
       topic: 'últimas notícias e avanços técnicos em IA e Cripto de hoje' 
     });
     await twitter.postTweet(tweet);

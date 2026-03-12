@@ -62,7 +62,11 @@ export class AIService {
 
   private buildPrompt(request: AIContentRequest): string {
     if (request.platform === 'twitter') {
-      return `Crie um post para o X sobre ${request.topic || 'as tendências atuais de Web3 e AI'}. Lembre-se do gancho, insight e pergunta final.`;
+      const contextText = request.context 
+        ? `\n\nCONTEXTO DE TWEETS RECENTES NO X:\n${request.context}\n\nBaseado nos tweets acima, crie um novo post original que entre nessa conversa de forma inteligente.`
+        : `\n\nSobre o tópico: ${request.topic || 'as novidades de hoje em IA e Cripto'}`;
+      
+      return `Crie um post autêntico para o X (Twitter).${contextText}\nLembre-se: tom humano, sem parecer robô, agregando valor.`;
     } else {
       return `Interaja naturalmente no Discord. Contexto da conversa: "${request.context}". Topic: ${request.topic || 'General'}.`;
     }

@@ -21,6 +21,20 @@ export class TwitterService {
     return this.client.v2.tweet(text);
   }
 
+  async getRecentTweets(query: string, limit: number = 5) {
+    const search = await this.client.v2.search(query, {
+      'tweet.fields': ['text', 'author_id', 'created_at'],
+      max_results: 10 // Pega um pouco mais para filtrar se necessário
+    });
+    
+    const tweets = [];
+    for (const tweet of search) {
+      tweets.push(tweet.text);
+      if (tweets.length >= limit) break;
+    }
+    return tweets;
+  }
+
   async searchAndReply(query: string, replyText: string) {
     const search = await this.client.v2.search(query, { 'tweet.fields': ['author_id'] });
     for (const tweet of search) {

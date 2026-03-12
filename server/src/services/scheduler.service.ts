@@ -11,29 +11,32 @@ export class SchedulerService {
   ) {}
 
   start() {
-    // Post every day at 10:00 AM
-    cron.schedule('0 10 * * *', async () => {
-      console.log('Running daily post schedule...');
+    // Post every hour at minute 30 (09:30, 10:30, 11:30...)
+    cron.schedule('30 * * * *', async () => {
+      console.log('Running hourly engagement post...');
       await this.runDailyPosting();
     });
   }
 
   async runDailyPosting() {
     try {
+      // 1. Buscar o que as pessoas estão falando sobre IA agora
+      console.log('Searching for AI trends on X...');
+      const recentTweets = await this.twitter.getRecentTweets('AI news OR LLM OR OpenAI OR crypto AI', 3);
+      const context = recentTweets.join('\n---\n');
+
+      // 2. Gerar conteúdo baseado no que foi encontrado
       const tweet = await this.ai.generateContent({ 
         platform: 'twitter', 
-        topic: 'novidades quentes de IA e o impacto no mercado cripto' 
+        context: context || undefined,
+        topic: 'últimas novidades de IA e tecnologia'
       });
-      await this.twitter.postTweet(tweet);
 
-      // Discord desativado, mas mantendo a estrutura se necessário no futuro
-      /* const discordPost = await this.ai.generateContent({ platform: 'discord', topic: 'AI & Crypto' }); */
-      // Assuming a default channel ID from env
-      /* if (process.env.DISCORD_CHANNEL_ID) {
-        await this.discord.postMessage(process.env.DISCORD_CHANNEL_ID, discordPost);
-      } */
+      // 3. Postar no X
+      await this.twitter.postTweet(tweet);
+      console.log('Hourly post completed successfully.');
     } catch (error) {
-      console.error('Error in daily posting:', error);
+      console.error('Error in hourly posting:', error);
     }
   }
 
