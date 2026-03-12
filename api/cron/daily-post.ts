@@ -1,6 +1,6 @@
-import { AIService } from '../../server/src/services/ai.service';
-import { DiscordService } from '../../server/src/services/discord.service';
-import { TwitterService } from '../../server/src/services/twitter.service';
+import { AIService } from '../../server/src/services/ai.service.js';
+import { DiscordService } from '../../server/src/services/discord.service.js';
+import { TwitterService } from '../../server/src/services/twitter.service.js';
 
 export default async function handler(req: any, res: any) {
   // Verificar se a requisição veio do Vercel Cron (Segurança)
