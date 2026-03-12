@@ -23,7 +23,10 @@ export default async function handler(req: any, res: any) {
     });
 
     // 1. Gerar e postar no X (Twitter)
-    const tweet = await ai.generateContent({ platform: 'twitter', topic: 'Web3 & AI Trends' });
+    const tweet = await ai.generateContent({ 
+      platform: 'twitter', 
+      topic: 'últimas notícias e avanços técnicos em IA e Cripto de hoje' 
+    });
     await twitter.postTweet(tweet);
 
     /* 2. Gerar e postar no Discord (Desativado)

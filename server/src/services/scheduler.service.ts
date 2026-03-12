@@ -26,14 +26,18 @@ export class SchedulerService {
 
   async runDailyPosting() {
     try {
-      const tweet = await this.ai.generateContent({ platform: 'twitter', topic: 'Web3 & AI' });
+      const tweet = await this.ai.generateContent({ 
+        platform: 'twitter', 
+        topic: 'novidades quentes de IA e o impacto no mercado cripto' 
+      });
       await this.twitter.postTweet(tweet);
 
-      const discordPost = await this.ai.generateContent({ platform: 'discord', topic: 'Crypto Gaming' });
+      // Discord desativado, mas mantendo a estrutura se necessário no futuro
+      /* const discordPost = await this.ai.generateContent({ platform: 'discord', topic: 'AI & Crypto' }); */
       // Assuming a default channel ID from env
-      if (process.env.DISCORD_CHANNEL_ID) {
+      /* if (process.env.DISCORD_CHANNEL_ID) {
         await this.discord.postMessage(process.env.DISCORD_CHANNEL_ID, discordPost);
-      }
+      } */
     } catch (error) {
       console.error('Error in daily posting:', error);
     }
