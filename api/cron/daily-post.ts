@@ -17,16 +17,16 @@ export default async function handler(req: any, res: any) {
       accessToken: process.env.TWITTER_ACCESS_TOKEN!,
       accessSecret: process.env.TWITTER_ACCESS_SECRET!,
     });
-    const discord = new DiscordService();
-    await discord.login(process.env.DISCORD_TOKEN!);
 
     // 1. Gerar e postar no X (Twitter)
     const tweet = await ai.generateContent({ platform: 'twitter', topic: 'Web3 & AI Trends' });
     await twitter.postTweet(tweet);
 
-    // 2. Gerar e postar no Discord
-    const discordPost = await ai.generateContent({ platform: 'discord', topic: 'Crypto Gaming' });
-    if (process.env.DISCORD_CHANNEL_ID) {
+    // 2. Gerar e postar no Discord (Opcional)
+    if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL_ID) {
+      const discord = new DiscordService();
+      await discord.login(process.env.DISCORD_TOKEN);
+      const discordPost = await ai.generateContent({ platform: 'discord', topic: 'Crypto Gaming' });
       await discord.postMessage(process.env.DISCORD_CHANNEL_ID, discordPost);
     }
 
