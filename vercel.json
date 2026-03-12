@@ -2,9 +2,14 @@
   "crons": [
     {
       "path": "/api/cron/daily-post",
-      "schedule": "0 10 * * *"
+      "schedule": "30 * * * *"
     }
   ],
+  "functions": {
+    "api/cron/daily-post.ts": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
