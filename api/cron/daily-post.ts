@@ -1,6 +1,10 @@
-import { AIService } from '../../server/src/services/ai.service.js';
-import { DiscordService } from '../../server/src/services/discord.service.js';
-import { TwitterService } from '../../server/src/services/twitter.service.js';
+import * as AI from '../../server/src/services/ai.service.js';
+import * as Discord from '../../server/src/services/discord.service.js';
+import * as Twitter from '../../server/src/services/twitter.service.js';
+
+const { AIService } = AI;
+const { DiscordService } = Discord;
+const { TwitterService } = Twitter;
 
 export default async function handler(req: any, res: any) {
   // Verificar se a requisição veio do Vercel Cron (Segurança)
@@ -22,13 +26,13 @@ export default async function handler(req: any, res: any) {
     const tweet = await ai.generateContent({ platform: 'twitter', topic: 'Web3 & AI Trends' });
     await twitter.postTweet(tweet);
 
-    // 2. Gerar e postar no Discord (Opcional)
+    /* 2. Gerar e postar no Discord (Desativado)
     if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL_ID) {
       const discord = new DiscordService();
       await discord.login(process.env.DISCORD_TOKEN);
       const discordPost = await ai.generateContent({ platform: 'discord', topic: 'Crypto Gaming' });
       await discord.postMessage(process.env.DISCORD_CHANNEL_ID, discordPost);
-    }
+    } */
 
     return res.status(200).json({ success: true, message: 'Daily posts completed' });
   } catch (error: any) {

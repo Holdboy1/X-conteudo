@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
 
   return (
     <div className="dashboard">
