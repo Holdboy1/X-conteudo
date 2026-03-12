@@ -1,6 +1,7 @@
 {
   "name": "social-control-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "Backend for Discord & X Social Control System",
   "main": "dist/index.js",
   "scripts": {
