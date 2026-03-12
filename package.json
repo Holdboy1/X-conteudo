@@ -24,7 +24,7 @@
   "scripts": {
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "build:client": "npm run build --workspace=client",
+    "build:client": "npm run build --workspace=client && rm -rf dist && mv client/dist dist",
     "build:server": "cd server && npm run build"
   }
 }
