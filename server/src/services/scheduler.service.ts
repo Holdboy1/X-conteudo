@@ -16,12 +16,6 @@ export class SchedulerService {
       console.log('Running daily post schedule...');
       await this.runDailyPosting();
     });
-
-    // Check for social interactions every 2 hours
-    cron.schedule('0 */2 * * *', async () => {
-      console.log('Running interaction check...');
-      await this.runInteractions();
-    });
   }
 
   async runDailyPosting() {
