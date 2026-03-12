@@ -35,12 +35,5 @@ export class TwitterService {
     return tweets;
   }
 
-  async searchAndReply(query: string, replyText: string) {
-    const search = await this.client.v2.search(query, { 'tweet.fields': ['author_id'] });
-    for (const tweet of search) {
-      // Logic to reply naturally
-      await this.client.v2.reply(replyText, tweet.id);
-      break; // For safety, only reply once per interaction cycle initially
-    }
   }
 }

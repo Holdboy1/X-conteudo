@@ -66,10 +66,13 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json({ success: true, message: 'Hourly post completed' });
   } catch (error: any) {
     console.error('CRITICAL CRON ERROR:', error);
+    
+    // Sanitização de erro para produção: Não vazar detalhes internos
+    const isDev = process.env.NODE_ENV === 'development';
     return res.status(500).json({ 
       error: 'Execution failed', 
-      details: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      message: isDev ? error.message : 'An internal error occurred during post processing.',
+      stack: isDev ? error.stack : undefined
     });
   }
 }
